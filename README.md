@@ -17,3 +17,11 @@ sudo apt install ansible
 ```
 
 Add the machines hosts on **hosts** file.
+
+## Execute ansible
+
+```Bash
+ansible-playbook -K main.yml
+```
+
+This will ask for the user password
