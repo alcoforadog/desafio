@@ -3,3 +3,12 @@
   become: true
   roles:
   - basic
+
+- hosts: server1
+  become: true
+  vars:
+    NODEJS_VERSION: "12"
+    ansible_distribution_release: "bionic" #trusty
+  roles:
+  - node
+  - expressjs

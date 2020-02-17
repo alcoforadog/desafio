@@ -1,0 +1,5 @@
+- name: Install "expressjs" node.js package.
+  npm:
+    name: express
+    global: true
+    state: present
