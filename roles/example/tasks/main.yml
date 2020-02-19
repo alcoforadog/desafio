@@ -1,0 +1,23 @@
+- name: "Intaling nginx"
+  apt: 
+    pkg: 
+    - nginx
+    state: present
+
+- name: Install "pm2" node.js package.
+  npm:
+    name: pm2
+    global: true
+    state: present
+
+- name: Install "expressjs" node.js package.
+  npm:
+    name: express
+    path: '{{ app_path }}'
+    state: present
+
+- name: "Copy"
+  template:
+    src: ../files/example.js
+    dest: '{{ app_path }}'
+  notify: restart-app

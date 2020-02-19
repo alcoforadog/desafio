@@ -1,0 +1,8 @@
+- name: restart-app
+  ignore_errors: True
+  shell: 'pm2 delete {{ app }}'
+  notify: 
+  - start-app
+
+- name: start-app
+  shell: 'pm2 start {{ app_path }}/example.js --name {{ app }} --watch -i 0 -- 3000'

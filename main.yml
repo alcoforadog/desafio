@@ -8,7 +8,9 @@
   become: true
   vars:
     NODEJS_VERSION: "12"
-    ansible_distribution_release: "bionic" #trusty
+    ansible_distribution_release: "bionic"
+    app_path: "/var/www"
+    app: "example"
   roles:
   - node
-  - expressjs
+  - example

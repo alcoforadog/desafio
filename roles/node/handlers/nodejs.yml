@@ -1,0 +1,4 @@
+- name: add-gpg-key-for-node
+  apt_key:
+    url: "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
+    state: present
