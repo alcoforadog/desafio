@@ -11,6 +11,8 @@
     ansible_distribution_release: "bionic"
     app_path: "/var/www"
     app: "example"
+    ssl_key_path: "/etc/ssl"
+    ssl_key_name: "main"
   roles:
   - node
   - example

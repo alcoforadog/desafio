@@ -16,8 +16,17 @@
     path: '{{ app_path }}'
     state: present
 
+- name: "Copy nginx configs"
+  template:
+    src: ../files/nginx.conf
+    dest: '/etc/nginx/sites-available/default'
+  notify: 
+  - create-nginx-ssl-key
+  
 - name: "Copy"
   template:
     src: ../files/example.js
     dest: '{{ app_path }}'
-  notify: restart-app
+  notify: 
+  - stop-app
+  - start-app

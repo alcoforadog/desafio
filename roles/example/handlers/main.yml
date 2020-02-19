@@ -1,8 +1,32 @@
-- name: restart-app
-  ignore_errors: True
-  shell: 'pm2 delete {{ app }}'
-  notify: 
-  - start-app
+- name: stop-app
+  shell: 'pm2 pid {{ app }}'
 
 - name: start-app
   shell: 'pm2 start {{ app_path }}/example.js --name {{ app }} --watch -i 0 -- 3000'
+
+- name: restart-nginx 
+  service:
+    name: nginx
+    state: restarted
+
+- name: create-nginx-ssl-key
+  openssl_privatekey:
+    path: '{{ ssl_key_path }}/{{ ssl_key_name }}.key'
+  notify: 
+  - create-nginx-ssl-csr
+
+- name: create-nginx-ssl-csr
+  openssl_csr:
+    path: '{{ ssl_key_path }}/{{ ssl_key_name }}.csr'
+    privatekey_path: '{{ ssl_key_path }}/{{ ssl_key_name }}.key'
+  notify: 
+  - create-nginx-ssl-certificate
+
+- name: create-nginx-ssl-certificate
+  openssl_certificate:
+    path: '{{ ssl_key_path }}/{{ ssl_key_name }}.crt'
+    privatekey_path: '{{ ssl_key_path }}/{{ ssl_key_name }}.key'
+    csr_path: '{{ ssl_key_path }}/{{ ssl_key_name }}.csr'
+    provider: selfsigned
+  notify: 
+  - restart-nginx
